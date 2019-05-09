@@ -21,17 +21,26 @@ namespace BomberMan_2._0
     /// </summary>
     public partial class MainWindow : Window
     {
-        DispatcherTimer gameTimer = new DispatcherTimer();
-        Player player1 = new Player();
-        Point player1Point = new Point(0, 0);
+        Map map;
+        Player player1;
+        Player player2;
+        DispatcherTimer gameTimer;
+        Point player1Point;
+        Point player2Point;
         public MainWindow()
         {
             InitializeComponent();
-           
-            Map map = new Map();
-            map.initializeMap(canvas);
+            player1Point = new Point(0, 0);
+            player2Point = new Point(896, 512);
+            map = new Map(canvas);
+            player1 = new Player(canvas, Brushes.DarkRed, player1Point);
+            player2 = new Player(canvas, Brushes.DarkBlue, player2Point);
+            gameTimer = new DispatcherTimer();
             
-            player1.createPlayer(Brushes.DarkRed, canvas, player1Point);
+            
+          
+            
+          
             gameTimer.Tick += gameTimer_Tick;
             gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 60);
             gameTimer.Start();
@@ -40,7 +49,9 @@ namespace BomberMan_2._0
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            player1.updatePlayer(player1Point);
+            player1.updatePlayer(Key.W, Key.S, Key.A, Key.D);
+            player2.updatePlayer(Key.Up, Key.Down, Key.Left, Key.Right);
+            
         }
     }
 }
