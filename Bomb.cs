@@ -125,9 +125,9 @@ namespace BomberMan_2._0
         }
 
         //checks if the player is in the blast radius. Checks at the main timer tick rate (not the bomb tick rate).
-        public  bool isPlayerDead(int x, int y)
+        public  bool isPlayerDead(Point p)
         {
-            if (Matrices.bomb[x, y] == 1)
+            if (Matrices.bomb[(int)p.X, (int)p.Y] == 1)
             {
                 return true;
             }
