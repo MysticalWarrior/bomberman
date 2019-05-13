@@ -49,15 +49,7 @@ namespace BomberMan_2._0
         {
             placeBomb(place);
             movePlayer(up, down, left, right);
-            if(bomb.bombFuse == 0)
-            {
-                
-                if(bomb.isPlayerDead((int)playerPoint.X/64, (int)playerPoint.Y /64) == true)
-                {
-                   /*Ethan add endgame screen here: */
-                    MessageBox.Show("player " + playerNumber + " has recieved ded.");
-                }
-            }
+          
             Canvas.SetTop(playerRectangle, playerPoint.Y);
             Canvas.SetLeft(playerRectangle, playerPoint.X);
 
