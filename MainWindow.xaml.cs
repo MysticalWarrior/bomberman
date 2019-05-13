@@ -72,7 +72,11 @@ namespace BomberMan_2._0
                 bomb.isPlayerDead(p);
             }
             player1.updatePlayer(Key.W, Key.S, Key.A, Key.D, Key.LeftShift); 
+            player1Point = player1.PlayerPoint;
+            bomb.isPlayerDead(player1Point);
             player2.updatePlayer(Key.Up, Key.Down, Key.Left, Key.Right, Key.RightCtrl);
+            player2Point = player2.PlayerPoint;
+            bomb.isPlayerDead(player2Point);
             
         }
     }
