@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*Sebastian Horton, Elliot McArthur
+ * Friday May 17th, 2019
+ * A class that draws a grid of rectangles based on a set of matrices.
+ * */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,47 +17,82 @@ namespace BomberMan_2._0
   
     class Map
     {
-        Matrices matrices = new Matrices();      
-        Rectangle[,] map = new Rectangle[15,9];
-        
+        //constructs the map in the mainwindow.
+        //Also meshes the "pillars" and "blocks" matrices and sets the walkable space at the start of the game.
         public Map(Canvas c)
         {
-            updateMap(c);
-        }
-        
-            
-        private void updateMap(Canvas c)
-        {
-            matrices.updateWalkable();
+
+            Matrices.updateBlocks();
+            Matrices.updateWalkable();
 
             for (int x = 0; x < 9; x++)
             {
-                for(int y = 0; y < 15; y++)
+                for (int y = 0; y < 15; y++)
                 {
-                    map[y, x] = new Rectangle();
-                    map[y, x].Height = 64;
-                    map[y, x].Width = 64;
+                    Matrices.map[y, x] = new Rectangle();
+                    Matrices.map[y, x].Height = 64;
+                    Matrices.map[y, x].Width = 64;
 
+
+
+                    Canvas.SetTop(Matrices.map[y, x], 64 * x);
+                    Canvas.SetLeft(Matrices.map[y, x], 64 * y);
+                    c.Children.Add(Matrices.map[y, x]);
+
+                }
+            }
+            colourMap();
+        }
+
+        //updates the map colours based on the position of the blocks, pillars and walkable space.
+        public static void colourMap()
+        {
+            /*Ethan change these to be the sprites you created*/
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 15; y++)
+                {
                     if (Matrices.pillars[y, x] == 1)
                     {
-                        map[y,x].Fill = Brushes.Red;
+                        Matrices.map[y, x].Fill = Brushes.Red; 
                     }
-                    else if(Matrices.blocks[y,x] == 1)
+                    else if (Matrices.blocks[y, x] == 1 )
                     {
-                        map[y,x].Fill = Brushes.Yellow;
+                        if(Matrices.bomb[y,x] == 1)
+                        {
+                            Matrices.map[y, x].Fill = Brushes.Green;
+                        }
+                        else
+                            Matrices.map[y, x].Fill = Brushes.Yellow;
                     }
-                    else if(Matrices.walkable[y,x] == 1)
+                    else if (Matrices.walkable[y, x] == 1)
                     {
-                        map[y,x].Fill = Brushes.Blue;
+                        if(Matrices.bomb[y,x] == 1)
+                        {
+                            Matrices.map[y, x].Fill = Brushes.Green;
+                        }
+                        else
+                        Matrices.map[y, x].Fill = Brushes.Blue;
                     }
-                   
-                            
-                    Canvas.SetTop(map[y, x], 64 * x);
-                    Canvas.SetLeft(map[y, x], 64 * y);
-                    c.Children.Add(map[y, x]);
-                        
+                    
+                }
+            }
+        }
+
+        //draws the bomb and it's blast radius.
+        public static void colourBombs()
+        {
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 15; y++)
+                {
+                    if (Matrices.bomb[y, x] == 1 && Matrices.pillars[y,x] == 0)
+                    {
+                        Matrices.map[y, x].Fill = Brushes.Green;
                     }
                 }
             }
+        }
+
     }
 }
