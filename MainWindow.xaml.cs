@@ -37,6 +37,8 @@ namespace BomberMan_2._0
         Player player2;
         Point player2Point;
         
+        List<Point> playerPoints = new list<Point>();
+        
         DispatcherTimer gameTimer;
        
         public MainWindow()
@@ -46,9 +48,11 @@ namespace BomberMan_2._0
             map = new Map(canvas); //construct map.
 
             player1Point = new Point(0, 0);
+            playerPoints.add(player1Point);
             player1 = new Player(canvas, Brushes.DarkRed, player1Point, 1);  //construct player1 in top left corner
 
             player2Point = new Point(896, 512); 
+            playerPoints.add(player2Point);
             player2 = new Player(canvas, Brushes.DarkBlue, player2Point, 2); //construct player2 in bottom right corner
 
 
@@ -63,6 +67,10 @@ namespace BomberMan_2._0
         {
             //each player uses a set of keys to move in 4 directions and place a bomb. 
             /*Ethan set it so the player can change their controls (a menu with textboxes that contain default values)*/
+            foreach(Point p in playerPoints)
+            {
+                bomb.isPlayerDead(p);
+            }
             player1.updatePlayer(Key.W, Key.S, Key.A, Key.D, Key.LeftShift); 
             player2.updatePlayer(Key.Up, Key.Down, Key.Left, Key.Right, Key.RightCtrl);
             
