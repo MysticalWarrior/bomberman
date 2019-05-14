@@ -57,6 +57,8 @@ namespace BomberMan_2._0
         {
             if (gamestate == GameState.gameOn)
             {
+                btnOptions.Visibility = Visibility.Hidden;
+                btnStart.Visibility = Visibility.Hidden;
                 game.updateGame();
             }
             else if(gamestate == GameState.optionsMenu)
@@ -65,27 +67,16 @@ namespace BomberMan_2._0
                 btnStart.Visibility = Visibility.Hidden;
 
                 TextBlock txtPlayer1 = new TextBlock();
-               
-                txtPlayer1.Height = 100;
-                txtPlayer1.Width = 250;
-
-                txtPlayer1.Text = "Player 1";
-                txtPlayer1.Background = Brushes.LightGray;
-                txtPlayer1.FontSize = 35;
-                TextBlock.SetTextAlignment(txtPlayer1, TextAlignment.Center);
-
-                canvas.Children.Add(txtPlayer1);
-
+                addTextBox(txtPlayer1, 360, 50, 250, Brushes.LightGray, "Player 1");
 
                 TextBox txtUp = new TextBox();
-
-                txtUp.Height = 50;
-                txtUp.Width = 250;
+                addTextBox(txtUp, 360, 150, 250, Brushes.LightGray, "W");
+                
 
                 txtUp.Text = "w".ToUpper();
                 txtUp.Background = Brushes.LightGray;
                 txtUp.FontSize = 35;
-                canvas.Children.Add(txtUp);
+//                canvas.Children.Add(txtUp);
 
 
                 TextBox txtDown = new TextBox();
@@ -95,18 +86,19 @@ namespace BomberMan_2._0
 
                 TextBox txtLeft = new TextBox();
                 txtLeft.Text = "w".ToUpper();
-                canvas.Children.Add(txtLeft);
+             //   canvas.Children.Add(txtLeft);
 
 
                 TextBox txtRight = new TextBox();
                 txtRight.Text = "w".ToUpper();
-                canvas.Children.Add(txtRight);
+               // canvas.Children.Add(txtRight);
 
             }
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
+
             gamestate = GameState.gameOn;
             game = new Game(canvas);
         }
@@ -115,17 +107,17 @@ namespace BomberMan_2._0
         {
             gamestate = GameState.optionsMenu;
         }
-        private void addTextBox(dynamic item, int xPos, int yPos, int hieght, int width, Brush colour)
+        private void addTextBox(dynamic item, int xPos, int yPos, int width, Brush colour, string content)
         {
-            item.Height = Height;
             item.Width = width;
 
-            item.Fill = colour;
+            item.Background = colour;
+            item.Text = content;
             item.FontSize = 35;
 
-            item.SetTextAlignment(item, TextAlignment.Center);
             Canvas.SetTop(item, yPos);
-
+            Canvas.SetLeft(item, xPos);
+            canvas.Children.Add(item);
         }
     }
 }
