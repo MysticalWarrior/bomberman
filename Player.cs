@@ -19,8 +19,6 @@ namespace BomberMan_2._0
     
     class Player
     {
-        //class declerations:
-        static Bomb bomb = new Bomb(); 
 
         //class-wide variables:
         Point playerPoint;
@@ -45,9 +43,8 @@ namespace BomberMan_2._0
         }
 
         //Updates the player after they take an action (place a bomb or move).
-        public Point updatePlayer(Key up, Key down, Key left, Key right, Key place) 
+        public Point updatePlayer(Key up, Key down, Key left, Key right) 
         {
-            placeBomb(place);
             movePlayer(up, down, left, right);
           
             Canvas.SetTop(playerRectangle, playerPoint.Y);
@@ -131,16 +128,9 @@ namespace BomberMan_2._0
 
         //if the player presses the "place" key it will check if this player already has a bomb placed that hasn't exploded.
         //If there is no bomb placed then it runs the Bomb class' function armBomb.
-        private void placeBomb(Key place)
+        public Point getPlayerPos()
         {
-            
-            if (Keyboard.IsKeyDown(place))
-            {
-                if (bomb.bombPlaced == false)
-                { 
-                    bomb.armBomb((int)playerPoint.X / 64, (int)playerPoint.Y / 64);
-                }
-            }
+            return playerPoint;
         }
     }
 }
