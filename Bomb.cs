@@ -31,7 +31,11 @@ namespace BomberMan_2._0
         public int bombFuse;
         static Point bombPos;
 
-        //creates the bomb.
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton
+        /// creates the bomb.
+        /// </summary>
         public Bomb(Point p)
         {
                 bombPlaced = true;
@@ -39,7 +43,11 @@ namespace BomberMan_2._0
                 armBomb(p);
         }
 
-        //triggers the fuse count down and updates the matrix.
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton
+        /// triggers the fuse count down and updates the matrix.
+        /// </summary>
         public Point armBomb(Point p)
         {
             bombPos = new Point((int)p.X/64, (int)p.Y/64);
@@ -51,8 +59,12 @@ namespace BomberMan_2._0
 
             return bombPos;
         }
-        
-        //checks if the explosion is within the map and updates the matrix.
+
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton
+        /// checks if the explosion is within the map and updates the matrix.
+        /// </summary>
         public int[,] explosion()
         {
             int x = (int)bombPos.X;
@@ -85,7 +97,11 @@ namespace BomberMan_2._0
             return Matrices.bomb;
         }
 
-        //resets the fuse, updates the matrix and redraws the map.
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton
+        /// resets the fuse, updates the matrix and redraws the map.
+        /// </summary>
         public bool resetBomb()
         {
                 bombFuse = 2;
@@ -97,19 +113,6 @@ namespace BomberMan_2._0
                 bombPlaced = false;
                 return true;
         }
-
-        //checks for the fuse's length (int value). 
-        //If the fuse is at 0 then detonate the bomb (shows blast radius).
-        //If the fuse when off 1 tick ago it resets (removes blast radius and redraws map).
-        public void update()
-        {
-            /*Ethan add spritesheet logic here based on bombfuse value*/
-          
-               
-        }
-
-        //checks if the player is in the blast radius. Checks at the main timer tick rate (not the bomb tick rate).
-
 
     }
 }

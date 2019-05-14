@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* Sebastion Horton
+ * Tuesday, May 14, 2019
+ * Class that creates the game
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +30,6 @@ namespace BomberMan_2._0
         Player player2;
         Point player2Point;
 
-        Bomb bomb;
         int bombFuse;
         bool bombPlaced;
         List<Bomb> bombs;
@@ -61,10 +64,12 @@ namespace BomberMan_2._0
           
             
         }
-        //if the player presses the "place" key it will check if this player already has a bomb placed that hasn't exploded.
-        //checks for the fuse's length (int value). 
-        //If the fuse is at 0 then detonate the bomb (shows blast radius).
-        //If the fuse went off 5 tick ago it resets (removes blast radius and redraws map).
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton, Logan Ellis
+        /// if the player presses the "place" key it will check if this player already has a bomb placed that hasn't exploded.
+        /// If there is no bomb placed then it runs the Bomb class' function armBomb.
+        /// </summary>
         private bool placeBomb(Key place, Player player)
         {
             if (bombPlaced == false)
@@ -109,7 +114,12 @@ namespace BomberMan_2._0
             }
             return false;
         }
-        //checks if the player is in the blast radius
+
+        /// <summary>
+        /// Authors
+        /// Sebastion Horton
+        /// checks if the player is in the blast radius
+        /// </summary>
         private bool isPlayerDead(Point p)
         {
             

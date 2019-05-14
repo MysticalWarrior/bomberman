@@ -23,8 +23,12 @@ namespace BomberMan_2._0
         //class-wide variables:
         Point playerPoint;
         Rectangle playerRectangle;
-       
-        //creates a player rectangle with a hieght, width, colour and position on the canvas.
+
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton, Logan Ellis
+        /// creates a player rectangle with a hieght, width, colour and position on the canvas.
+        /// </summary>
         public Player(Canvas c, Brush colour, Point p) 
         {
             playerPoint.X = p.X;
@@ -40,7 +44,11 @@ namespace BomberMan_2._0
             c.Children.Add(playerRectangle);
         }
 
-        //Updates the player after they take an action (place a bomb or move).
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton, Logan Ellis
+        /// Updates the player after they take an action (place a bomb or move).
+        /// </summary>
         public Point updatePlayer(Key up, Key down, Key left, Key right) 
         {
             movePlayer(up, down, left, right);
@@ -51,7 +59,11 @@ namespace BomberMan_2._0
             return playerPoint;
         }
 
-        //takes the players input based on their controls and makes sure that they're within the map.
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton, Logan Ellis
+        /// takes the players input based on their controls and makes sure that they're within the map.
+        /// </summary>
         private void movePlayer(Key up, Key down, Key left, Key right)
         {
             if(Keyboard.IsKeyDown(up) && playerPoint.Y > 0) 
@@ -88,8 +100,13 @@ namespace BomberMan_2._0
                
             }
         }
-        
-        //takes the players future position and checks what type of square it is (block, pillar or walkable).
+
+
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton, Logan Ellis
+        /// takes the players future position and checks what type of square it is (block, pillar or walkable).
+        /// </summary>
         private bool checkPlayer(int offsetX, int offsetY)
         {
             int playerPosX = ((int)playerPoint.X / 64);

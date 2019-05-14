@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BomberMan_2._0"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000" >
+        Title="Bomberman" Height="700" Width="1000" >
     <Canvas x:Name="canvas">
-        <Label x:Name="test" Height="1000" Width="1000" Content=""/>
+        <Button x:Name="btnStart" Height="100" Width="250" Canvas.Left="360" Canvas.Top="100" Content="Start" FontSize="35" Click="BtnStart_Click"/>
+        <Button x:Name="btnOptions"  Height="100" Width="250" Canvas.Left="360" Canvas.Top="250" Content="Options" FontSize="35" Click="BtnOptions_Click"/>
     </Canvas>
 </Window>

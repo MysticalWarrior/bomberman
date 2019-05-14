@@ -60,9 +60,13 @@ namespace BomberMan_2._0
                                    {1, 0, 1, 0, 1, 0, 1, 0, 0},
                                    {1, 1, 1, 1, 1, 1, 1, 0, 0}   };
 
-        //loops through all of the values in a 15,9 grid and checks for pillars or blocks. 
-        //If any are found a 0 is placed in the same cordinate in the walkable matrix. 
-        //Otherwise, a 1 is placed at that cordinate in the walkable matrix.
+        ///<summary>
+        /// Authors
+        /// Sebastian Horton
+        ///loops through all of the values in a 15,9 grid and checks for pillars or blocks. 
+        ///If any are found a 0 is placed in the same cordinate in the walkable matrix. 
+        ///Otherwise, a 1 is placed at that cordinate in the walkable matrix.
+        ///<summary>
         public static int[,] updateWalkable()
         {
             //values are stored in length width(y,x).
@@ -84,7 +88,11 @@ namespace BomberMan_2._0
             return walkable;
         }
 
-        //removes blocks that are the same cordinates and bombs.
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton
+        /// removes blocks that are the same cordinates and bombs.
+        /// </summary>
         public static int[,] updateBlocks()
         {
             

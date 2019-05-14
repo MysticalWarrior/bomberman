@@ -17,8 +17,12 @@ namespace BomberMan_2._0
   
     class Map
     {
-        //constructs the map in the mainwindow.
-        //Also meshes the "pillars" and "blocks" matrices and sets the walkable space at the start of the game.
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton, Elliot McArthur
+        ///constructs the map in the mainwindow.
+        ///Also meshes the "pillars" and "blocks" matrices and sets the walkable space at the start of the game.
+        /// </summary>
         public Map(Canvas c)
         {
 
@@ -44,7 +48,11 @@ namespace BomberMan_2._0
             colourMap();
         }
 
-        //updates the map colours based on the position of the blocks, pillars and walkable space.
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton, Elliott McArthur
+        /// updates the map colours based on the position of the blocks, pillars and walkable space.
+        /// </summary>
         public static void colourMap()
         {
             /*Ethan change these to be the sprites you created*/
@@ -79,7 +87,11 @@ namespace BomberMan_2._0
             }
         }
 
-        //draws the bomb and it's blast radius.
+        /// <summary>
+        /// Authors
+        /// Sebastian Horton, Elliott McArthur
+        /// draws the bomb and it's blast radius.
+        /// </summary>
         public static void colourBombs()
         {
             for (int x = 0; x < 9; x++)
