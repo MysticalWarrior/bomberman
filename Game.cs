@@ -37,10 +37,10 @@ namespace BomberMan_2._0
             map = new Map(c); //construct map.
 
             player1Point = new Point(0, 0);
-            player1 = new Player(c, Brushes.DarkRed, player1Point, 1);  //construct player1 in top left corner
+            player1 = new Player(c, Brushes.DarkRed, player1Point);  //construct player1 in top left corner
 
             player2Point = new Point(896, 512); //896, 512
-            player2 = new Player(c, Brushes.DarkBlue, player2Point, 2); //construct player2 in bottom right corner
+            player2 = new Player(c, Brushes.DarkBlue, player2Point); //construct player2 in bottom right corner
 
             players = new List<Player>() { player1, player2};
             bombs = new List<Bomb>();
@@ -61,6 +61,10 @@ namespace BomberMan_2._0
           
             
         }
+        //if the player presses the "place" key it will check if this player already has a bomb placed that hasn't exploded.
+        //checks for the fuse's length (int value). 
+        //If the fuse is at 0 then detonate the bomb (shows blast radius).
+        //If the fuse went off 5 tick ago it resets (removes blast radius and redraws map).
         private bool placeBomb(Key place, Player player)
         {
             if (bombPlaced == false)
@@ -105,6 +109,7 @@ namespace BomberMan_2._0
             }
             return false;
         }
+        //checks if the player is in the blast radius
         private bool isPlayerDead(Point p)
         {
             

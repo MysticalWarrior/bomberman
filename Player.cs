@@ -23,12 +23,10 @@ namespace BomberMan_2._0
         //class-wide variables:
         Point playerPoint;
         Rectangle playerRectangle;
-        int playerNumber; 
        
         //creates a player rectangle with a hieght, width, colour and position on the canvas.
-        public Player(Canvas c, Brush colour, Point p, int player) 
+        public Player(Canvas c, Brush colour, Point p) 
         {
-            playerNumber = player;
             playerPoint.X = p.X;
             playerPoint.Y = p.Y;
             playerRectangle = new Rectangle();
@@ -126,8 +124,7 @@ namespace BomberMan_2._0
             
         }
 
-        //if the player presses the "place" key it will check if this player already has a bomb placed that hasn't exploded.
-        //If there is no bomb placed then it runs the Bomb class' function armBomb.
+      //returns the player's position
         public Point getPlayerPos()
         {
             return playerPoint;
