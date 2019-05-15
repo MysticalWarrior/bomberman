@@ -23,7 +23,7 @@ namespace BomberMan_2._0
         //class-wide variables:
         Point playerPoint;
         Rectangle playerRectangle;
-
+        public bool bombPlaced;
         /// <summary>
         /// Authors
         /// Sebastian Horton, Logan Ellis

@@ -28,22 +28,23 @@ namespace BomberMan_2._0
         /*Ethan add appropriate music*/
 
         //public objects:
-        enum GameState { startMenu, optionsMenu, gameOn, gameOver}
-        GameState gamestate;
         Game game;
+        Canvas cGame;
+        Menu menu;
+        public enum GameState { startMenu, optionsMenu, gameOn, gameOver}
+        public static GameState gamestate;
         
         DispatcherTimer gameTimer;
        
         public MainWindow()
         {
             InitializeComponent();
-
-
+            menu = new Menu(canvas, BtnPlay_Click, BtnControls_Click, BtnQuit_Click);
+            cGame = new Canvas();
 
             gameTimer = new DispatcherTimer();
             gameTimer.Tick += gameTimer_Tick;
             gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 15); //30 frames(ticks)/second
-            gameTimer.Start();
 
         }
 
@@ -55,69 +56,28 @@ namespace BomberMan_2._0
         /// </summary>
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            if (gamestate == GameState.gameOn)
-            {
-                btnOptions.Visibility = Visibility.Hidden;
-                btnStart.Visibility = Visibility.Hidden;
-                game.updateGame();
-            }
-            else if(gamestate == GameState.optionsMenu)
-            {
-                btnOptions.Visibility = Visibility.Hidden;
-                btnStart.Visibility = Visibility.Hidden;
-
-                TextBlock txtPlayer1 = new TextBlock();
-                addTextBox(txtPlayer1, 360, 50, 250, Brushes.LightGray, "Player 1");
-
-                TextBox txtUp = new TextBox();
-                addTextBox(txtUp, 360, 150, 250, Brushes.LightGray, "W");
-                
-
-                txtUp.Text = "w".ToUpper();
-                txtUp.Background = Brushes.LightGray;
-                txtUp.FontSize = 35;
-//                canvas.Children.Add(txtUp);
-
-
-                TextBox txtDown = new TextBox();
-                txtDown.Text = "w".ToUpper();
-                canvas.Children.Add(txtDown);
-
-
-                TextBox txtLeft = new TextBox();
-                txtLeft.Text = "w".ToUpper();
-             //   canvas.Children.Add(txtLeft);
-
-
-                TextBox txtRight = new TextBox();
-                txtRight.Text = "w".ToUpper();
-               // canvas.Children.Add(txtRight);
-
-            }
+            game.updateGame();
+            menu.EndGame(BtnBack_Click, gameTimer, cGame);
         }
 
-        private void BtnStart_Click(object sender, RoutedEventArgs e)
+        private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-
-            gamestate = GameState.gameOn;
-            game = new Game(canvas);
+            menu.removeAll();
+            game = new Game(cGame);
+            canvas.Children.Add(cGame);
+            gameTimer.Start();
         }
-
-        private void BtnOptions_Click(object sender, RoutedEventArgs e)
+        private void BtnControls_Click(object sender, RoutedEventArgs e)
         {
-            gamestate = GameState.optionsMenu;
+            menu.createControlsMenu(BtnBack_Click);
         }
-        private void addTextBox(dynamic item, int xPos, int yPos, int width, Brush colour, string content)
+        private void BtnQuit_Click(object sender, RoutedEventArgs e)
         {
-            item.Width = width;
-
-            item.Background = colour;
-            item.Text = content;
-            item.FontSize = 35;
-
-            Canvas.SetTop(item, yPos);
-            Canvas.SetLeft(item, xPos);
-            canvas.Children.Add(item);
+            this.Close();
+        }
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            menu.createMainMenu(BtnPlay_Click, BtnControls_Click, BtnQuit_Click);
         }
     }
 }

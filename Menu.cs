@@ -19,19 +19,21 @@ namespace BomberMan_2._0
    
     class Menu
     {
-        static Canvas c;
-        static Canvas cControls;
-        static Canvas cMainMenu;
-        static Canvas cGameOverMenu;
-        public Menu(Canvas canvas)
+        public static string playerNumber;
+         Canvas c;
+        Canvas cControls;
+        Canvas cMainMenu;
+        Canvas cGameOverMenu;
+        public Menu(Canvas canvas, RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click)
         {
             c = canvas;
             cControls = new Canvas();
             cMainMenu = new Canvas();
             cGameOverMenu = new Canvas();
+            createMainMenu(btnPlay_Click, btnControls_Click, btnQuit_Click);
             
         }
-            private static void addWPFObject(dynamic item, int xPos, int yPos, int width, Brush colour, string content, Canvas sp)
+            private void addWPFObject(dynamic item, int xPos, int yPos, int width, Brush colour, string content, Canvas sp)
             {
                 item.Width = width;
 
@@ -43,7 +45,7 @@ namespace BomberMan_2._0
                 Canvas.SetLeft(item, xPos);
                 sp.Children.Add(item);
             }
-        private static void addButton(Button btn, int xPos, int yPos, int width, int Height, int fontSize, Brush colour, string content, RoutedEventHandler btn_Click, Canvas c)
+        private void addButton(Button btn, int xPos, int yPos, int width, int Height, int fontSize, Brush colour, string content, RoutedEventHandler btn_Click, Canvas c)
         {
             btn.Click += btn_Click;
             btn.Height = Height;
@@ -58,7 +60,7 @@ namespace BomberMan_2._0
             c.Children.Add(btn);
         }
          
-        public static void createMainMenu(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click)
+        public void createMainMenu(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click)
         {
             removeAll();
             TextBlock txtTitle = new TextBlock();
@@ -71,7 +73,7 @@ namespace BomberMan_2._0
             addButton(btnQuit, 350, 450, 200, 125, 35, Brushes.DarkGray, "Quit", btnQuit_Click, cMainMenu);
             c.Children.Add(cMainMenu);
         }
-        public static void createControlsMenu(RoutedEventHandler btnBack_Click)
+        public void createControlsMenu(RoutedEventHandler btnBack_Click)
         {
             removeAll();
            
@@ -82,85 +84,97 @@ namespace BomberMan_2._0
 
             TextBlock txtUpHeader1 = new TextBlock();
             addWPFObject(txtUpHeader1, 170, 150, 90, Brushes.Red, "Up", cControls);
-            TextBox txtUp1 = new TextBox();
-            txtUp1.MaxLength = 1;
+            TextBlock txtUp1 = new TextBlock();
             addWPFObject(txtUp1, 270, 150, 150, Brushes.LightGray, "W", cControls);
 
             TextBlock txtDownHeader1 = new TextBlock();
             addWPFObject(txtDownHeader1, 170, 250, 90, Brushes.Red, "Down", cControls);
-            TextBox txtDown1 = new TextBox();
-            txtDown1.MaxLength = 1;
+            TextBlock txtDown1 = new TextBlock();
             addWPFObject(txtDown1, 270, 250, 150, Brushes.LightGray, "S", cControls);
 
             TextBlock txtLeftHeader1 = new TextBlock();
             addWPFObject(txtLeftHeader1, 170, 350, 90, Brushes.Red, "Left", cControls);
-            TextBox txtLeft1 = new TextBox();
-            txtLeft1.MaxLength = 1;
+            TextBlock txtLeft1 = new TextBlock();
             addWPFObject(txtLeft1, 270, 350, 150, Brushes.LightGray, "A", cControls);
 
             TextBlock txtRightHeader1 = new TextBlock();
             addWPFObject(txtRightHeader1, 170, 450, 90, Brushes.Red, "Right", cControls);
-            TextBox txtRight1 = new TextBox();
-            txtRight1.MaxLength = 1;
+            TextBlock txtRight1 = new TextBlock();
             addWPFObject(txtRight1, 270, 450, 150, Brushes.LightGray, "D", cControls);
 
-
+            TextBlock txtPlaceHeader1 = new TextBlock();
+            addWPFObject(txtPlaceHeader1, 170, 550, 90, Brushes.Red, "Bomb", cControls);
+            TextBlock txtPlace1 = new TextBlock();
+            addWPFObject(txtPlace1, 270, 550, 250, Brushes.LightGray, "Left Shift", cControls);
 
             TextBlock txtPlayer2 = new TextBlock();
             addWPFObject(txtPlayer2, 530, 50, 250, Brushes.LightGray, "Player 2", cControls);
 
             TextBlock txtUpHeader2 = new TextBlock();
             addWPFObject(txtUpHeader2, 530, 150, 90, Brushes.Blue, "Up", cControls);
-            TextBox txtUp2 = new TextBox();
-            txtUp2.MaxLength = 1;
-            addWPFObject(txtUp2, 630, 150, 150, Brushes.LightGray, "W", cControls);
+            TextBlock txtUp2 = new TextBlock();
+            addWPFObject(txtUp2, 630, 150, 250, Brushes.LightGray, "Up Arrow", cControls);
 
             TextBlock txtDownHeader2 = new TextBlock();
             addWPFObject(txtDownHeader2, 530, 250, 90, Brushes.Blue, "Down", cControls);
-            TextBox txtDown2 = new TextBox();
-            txtDown2.MaxLength = 1;
-            addWPFObject(txtDown2, 630, 250, 150, Brushes.LightGray, "S", cControls);
+            TextBlock txtDown2 = new TextBlock();
+            addWPFObject(txtDown2, 630, 250, 250, Brushes.LightGray, "Down Arrow", cControls);
 
             TextBlock txtLeftHeader2 = new TextBlock();
             addWPFObject(txtLeftHeader2, 530, 350, 90, Brushes.Blue, "Left", cControls);
-            TextBox txtLeft2 = new TextBox();
-            txtLeft2.MaxLength = 1;
-            addWPFObject(txtLeft2, 630, 350, 150, Brushes.LightGray, "A", cControls);
+            TextBlock txtLeft2 = new TextBlock();
+            addWPFObject(txtLeft2, 630, 350, 250, Brushes.LightGray, "Left Arrow", cControls);
 
             TextBlock txtRightHeader2 = new TextBlock();
             addWPFObject(txtRightHeader2, 530, 450, 90, Brushes.Blue, "Right", cControls);
-            TextBox txtRight2 = new TextBox();
-            txtRight2.MaxLength = 1;
-            addWPFObject(txtRight2, 630, 450, 150, Brushes.LightGray, "D", cControls);
+            TextBlock txtRight2 = new TextBlock();
+            addWPFObject(txtRight2, 630, 450, 250, Brushes.LightGray, "Right Arrow", cControls);
+
+            TextBlock txtPlaceHeader2 = new TextBlock();
+            addWPFObject(txtPlaceHeader2, 530, 550, 90, Brushes.Blue, "Bomb", cControls);
+            TextBlock txtPlace2 = new TextBlock();
+            addWPFObject(txtPlace2, 630, 550, 250, Brushes.LightGray, "Right Ctrl", cControls);
 
             Button btnBack = new Button();
-            addButton(btnBack, 350, 550, 150, 50, 35, Brushes.LightGray, "Back", btnBack_Click, cControls);
+            addButton(btnBack, 350, 610, 150, 50, 35, Brushes.LightGray, "Back", btnBack_Click, cControls);
 
             c.Children.Add(cControls);
         }
-        public static void createGameOverMenu(RoutedEventHandler btnBack_Click)
+        public void createGameOverMenu(RoutedEventHandler btnBack_Click)
         {
             removeAll();
             TextBlock txtTitle2 = new TextBlock();
-            addWPFObject(txtTitle2, 350, 50, 200, Brushes.DarkGray, "Game Over", cGameOverMenu);
+            if (playerNumber == "1")
+            {
+                c.Background = Brushes.Red;
+            }
+            else
+                c.Background = Brushes.Blue;
 
+            addWPFObject(txtTitle2, 350, 50, 200, Brushes.LightGray, "Player " + playerNumber + " wins!", cGameOverMenu);
+            
             Button btnBack2 = new Button();
-            addButton(btnBack2, 350, 550, 150, 50, 35, Brushes.LightGray, "Back", btnBack_Click, cGameOverMenu);
+            addButton(btnBack2, 260, 250, 400, 100, 40, Brushes.LightGray, "Main Menu", btnBack_Click, cGameOverMenu);
 
             c.Children.Add(cGameOverMenu);
         }
-        public void quitGame(MainWindow window)
+        public static void quitGame(MainWindow window)
         {
             window.Close();
         }
-        public void startGame(Canvas c)
+        public void EndGame(RoutedEventHandler btnBack_Click, DispatcherTimer timer, Canvas cGame)
         {
-            removeAll();
-            Map map = new Map(c);
-            Game game = new Game(c);
+           if(MainWindow.gamestate == MainWindow.GameState.gameOver)
+            {
+                timer.Stop();
+                removeAll();
+                createGameOverMenu(btnBack_Click);
+                c.Children.Remove(cGame);
+            }
         }
-        public static void removeAll()
+        public void removeAll()
         {
+            c.Background = Brushes.Purple;
             c.Children.Remove(cControls);
             c.Children.Remove(cMainMenu);
             c.Children.Remove(cGameOverMenu);
