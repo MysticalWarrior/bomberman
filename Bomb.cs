@@ -34,8 +34,11 @@ namespace BomberMan_2._0
         /// </summary>
         public Bomb(Point p)
         {
-                bombPlaced = true;
-                armBomb(p);
+            bombPlaced = true;
+            bombPos = new Point();
+            bombPos.X = p.X / 64;
+            bombPos.Y = p.Y / 64;
+            armBomb();
         }
 
         /// <summary>
@@ -43,9 +46,10 @@ namespace BomberMan_2._0
         /// Sebastian Horton
         /// triggers the fuse count down and updates the matrix.
         /// </summary>
-        public Point armBomb(Point p)
+        public Point armBomb()
         {
-            bombPos = new Point((int)p.X/64, (int)p.Y/64);
+            
+            //MessageBox.Show(bombPos.ToString());
             Matrices.bomb[(int)bombPos.X, (int)bombPos.Y] = 1;
             Map.colourMap();
 
@@ -57,7 +61,7 @@ namespace BomberMan_2._0
         /// Sebastian Horton
         /// checks if the explosion is within the map and updates the matrix.
         /// </summary>
-        public int[,] explosion()
+        public int[,] explosion(Point p)
         {
             int x = (int)bombPos.X;
             int y = (int)bombPos.Y;
@@ -96,11 +100,12 @@ namespace BomberMan_2._0
         /// </summary>
         public bool resetBomb()
         {
-                Matrices.bomb[(int)bombPos.X, (int)bombPos.Y] = 0;
+            
                 Matrices.updateBlocks();
                 Matrices.updateWalkable();
                 Map.colourMap();
-                return true;
+            Matrices.removeBombs();
+            return true;
         }
 
     }

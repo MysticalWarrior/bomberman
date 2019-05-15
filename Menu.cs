@@ -30,7 +30,7 @@ namespace BomberMan_2._0
             cControls = new Canvas();
             cMainMenu = new Canvas();
             cGameOverMenu = new Canvas();
-            createMainMenu(btnPlay_Click, btnControls_Click, btnQuit_Click);
+            createMainMenu(btnPlay_Click, btnControls_Click, btnQuit_Click, "Bomberman");
             
         }
             private void addWPFObject(dynamic item, int xPos, int yPos, int width, Brush colour, string content, Canvas sp)
@@ -60,11 +60,11 @@ namespace BomberMan_2._0
             c.Children.Add(btn);
         }
          
-        public void createMainMenu(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click)
+        public void createMainMenu(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click, string title)
         {
             removeAll();
             TextBlock txtTitle = new TextBlock();
-            addWPFObject(txtTitle, 350, 50, 200, Brushes.DarkGray, "Bomberman", cMainMenu);
+            addWPFObject(txtTitle, 350, 50, 220, Brushes.DarkGray, title, cMainMenu);
             Button btnPlay = new Button();
             addButton(btnPlay, 350, 150, 200, 125, 35, Brushes.DarkGray, "Play", btnPlay_Click, cMainMenu);
             Button btnControls = new Button();
@@ -140,10 +140,11 @@ namespace BomberMan_2._0
 
             c.Children.Add(cControls);
         }
-        public void createGameOverMenu(RoutedEventHandler btnBack_Click)
+        public void createGameOverMenu(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click)
         {
             removeAll();
-            TextBlock txtTitle2 = new TextBlock();
+            createMainMenu(btnPlay_Click, btnControls_Click, btnQuit_Click, "Player " + playerNumber + " Wins!");
+            c.Children.Add(cGameOverMenu);
             if (playerNumber == "1")
             {
                 c.Background = Brushes.Red;
@@ -151,24 +152,19 @@ namespace BomberMan_2._0
             else
                 c.Background = Brushes.Blue;
 
-            addWPFObject(txtTitle2, 350, 50, 200, Brushes.LightGray, "Player " + playerNumber + " wins!", cGameOverMenu);
             
-            Button btnBack2 = new Button();
-            addButton(btnBack2, 260, 250, 400, 100, 40, Brushes.LightGray, "Main Menu", btnBack_Click, cGameOverMenu);
-
-            c.Children.Add(cGameOverMenu);
         }
         public static void quitGame(MainWindow window)
         {
             window.Close();
         }
-        public void EndGame(RoutedEventHandler btnBack_Click, DispatcherTimer timer, Canvas cGame)
+        public void EndGame(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click, DispatcherTimer timer, Canvas cGame)
         {
            if(MainWindow.gamestate == MainWindow.GameState.gameOver)
             {
                 timer.Stop();
                 removeAll();
-                createGameOverMenu(btnBack_Click);
+                createGameOverMenu(btnPlay_Click, btnControls_Click, btnQuit_Click);
                 c.Children.Remove(cGame);
             }
         }

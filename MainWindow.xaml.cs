@@ -57,7 +57,7 @@ namespace BomberMan_2._0
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             game.updateGame();
-            menu.EndGame(BtnBack_Click, gameTimer, cGame);
+            menu.EndGame(BtnPlay_Click, BtnControls_Click, BtnQuit_Click, gameTimer, cGame);
         }
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
@@ -77,7 +77,7 @@ namespace BomberMan_2._0
         }
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            menu.createMainMenu(BtnPlay_Click, BtnControls_Click, BtnQuit_Click);
+            menu.createMainMenu(BtnPlay_Click, BtnControls_Click, BtnQuit_Click, "Bomberman");
         }
     }
 }

@@ -24,6 +24,7 @@ namespace BomberMan_2._0
         Point playerPoint;
         Rectangle playerRectangle;
         public bool bombPlaced;
+        public int bombFuse;
         /// <summary>
         /// Authors
         /// Sebastian Horton, Logan Ellis
@@ -145,6 +146,57 @@ namespace BomberMan_2._0
         public Point getPlayerPos()
         {
             return playerPoint;
+        }
+        public bool placeBomb(Key place, List<Player> players, List<Bomb> bombs, int playerDead)
+        {
+            if (bombPlaced == false)
+            {
+                if (Keyboard.IsKeyDown(place))
+                {
+                    bombs.Add(new Bomb(getPlayerPos()));
+                    bombFuse = 10;
+                    return bombPlaced = true;
+                }
+            }
+            foreach (Bomb b in bombs)
+            {
+
+                if (bombPlaced == true && bombFuse >= -2)
+                {
+                    bombFuse--;
+                    if (bombFuse == 0)
+                    {
+                        b.explosion(getPlayerPos());
+                        playerDead = 1;
+                        foreach (Player pl in players)
+                        {
+                            if (Game.isPlayerDead(pl.getPlayerPos()) == true)
+                            {
+                                if (playerDead == 1)
+                                {
+                                    Menu.playerNumber = "2";
+                                }
+                                else
+                                    Menu.playerNumber = "1";
+
+                                MainWindow.gamestate = MainWindow.GameState.gameOver;
+                            }
+                            playerDead++;
+
+                        }
+                        return bombPlaced = true;
+                    }
+                    else if (bombFuse == -2)
+                    {
+                        b.resetBomb();
+                        return bombPlaced = false;
+                    }
+                    return bombPlaced = true;
+                }
+                else
+                    return bombPlaced = false;
+            }
+            return false;
         }
     }
 }

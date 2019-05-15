@@ -22,6 +22,7 @@ namespace BomberMan_2._0
 {
     class Game
     {
+        Matrices matrix;
         Map map;
         public static int playerDead = 0;
       
@@ -31,12 +32,14 @@ namespace BomberMan_2._0
         Player player2;
         Point player2Point;
 
-        int bombFuse;
-        List<Bomb> bombs;
+        public List<Bomb> bombs;
 
-        List<Player> players;
+        public List<Player> players;
         public Game(Canvas c)
         {
+            MainWindow.gamestate = MainWindow.GameState.gameOn;
+            matrix = new Matrices();
+            Matrices.removeBombs();
             map = new Map(c);
             player1Point = new Point(0, 0);
             player1 = new Player(c, Brushes.DarkRed, player1Point);  //construct player1 in top left corner
@@ -54,8 +57,8 @@ namespace BomberMan_2._0
             player1.updatePlayer(Key.W, Key.S, Key.A, Key.D);
             player2.updatePlayer(Key.Up, Key.Down, Key.Left, Key.Right);
 
-            placeBomb(Key.RightCtrl, player2);
-            placeBomb(Key.LeftShift, player1);
+            player1.placeBomb(Key.LeftShift, players, bombs, playerDead);
+            player2.placeBomb(Key.RightCtrl, players, bombs, playerDead);
            
 
             
@@ -68,64 +71,14 @@ namespace BomberMan_2._0
         /// if the player presses the "place" key it will check if this player already has a bomb placed that hasn't exploded.
         /// If there is no bomb placed then it runs the Bomb class' function armBomb.
         /// </summary>
-        private bool placeBomb(Key place, Player player)
-        {
-            if (player.bombPlaced == false)
-            {
-                if (Keyboard.IsKeyDown(place))
-                {
-                    bombs.Add(new Bomb(player.getPlayerPos()));
-                    bombFuse = 15;
-                    return player.bombPlaced = true;
-                }
-            }
-            foreach (Bomb b in bombs)
-            {
-               
-                    if (player.bombPlaced == true && bombFuse >= -5)
-                    {
-                        bombFuse--;
-                        if (bombFuse == 0)
-                        {
-                            b.explosion();
-                        playerDead = 1;
-                        foreach (Player pl in players)
-                        {
-                            if (isPlayerDead(pl.getPlayerPos()) == true)
-                            {
-                                if (playerDead == 1)
-                                {
-                                    Menu.playerNumber = "2";
-                                }
-                                else
-                                    Menu.playerNumber = "1";
-
-                                MainWindow.gamestate = MainWindow.GameState.gameOver;
-                            }
-                            playerDead++;
-
-                        }
-                            return player.bombPlaced = true;
-                        }
-                        else if (bombFuse == -5)
-                        {
-                            b.resetBomb();
-                            return player.bombPlaced = false;
-                        }
-                        return player.bombPlaced = true;
-                    }
-                    else
-                        return player.bombPlaced = false;
-            }
-            return false;
-        }
+        
 
         /// <summary>
         /// Authors
         /// Sebastion Horton
         /// checks if the player is in the blast radius
         /// </summary>
-        private bool isPlayerDead(Point p)
+        public static bool isPlayerDead(Point p)
         {
             
                 if (Matrices.bomb[(int)p.X / 64, (int)p.Y / 64] == 1)
