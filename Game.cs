@@ -22,10 +22,9 @@ namespace BomberMan_2._0
 {
     class Game
     {
-        MainWindow mainWindow;
-        public static int playerDead = 0;
         Map map;
-
+        public static int playerDead = 0;
+      
         Player player1;
         Point player1Point;
 
@@ -33,24 +32,21 @@ namespace BomberMan_2._0
         Point player2Point;
 
         int bombFuse;
-        bool bombPlaced;
         List<Bomb> bombs;
 
         List<Player> players;
         public Game(Canvas c)
         {
-            mainWindow = new MainWindow();
-
+            map = new Map(c);
             player1Point = new Point(0, 0);
             player1 = new Player(c, Brushes.DarkRed, player1Point);  //construct player1 in top left corner
 
-            player2Point = new Point(896, 512); //896, 512
+            player2Point = new Point(896, 512);
             player2 = new Player(c, Brushes.DarkBlue, player2Point); //construct player2 in bottom right corner
 
             players = new List<Player>() { player1, player2};
             bombs = new List<Bomb>();
 
-            bombPlaced = false;
         }
         public void updateGame()
         {
@@ -74,19 +70,19 @@ namespace BomberMan_2._0
         /// </summary>
         private bool placeBomb(Key place, Player player)
         {
-            if (bombPlaced == false)
+            if (player.bombPlaced == false)
             {
                 if (Keyboard.IsKeyDown(place))
                 {
                     bombs.Add(new Bomb(player.getPlayerPos()));
                     bombFuse = 15;
-                    return bombPlaced = true;
+                    return player.bombPlaced = true;
                 }
             }
             foreach (Bomb b in bombs)
             {
                
-                    if (bombPlaced == true && bombFuse >= -5)
+                    if (player.bombPlaced == true && bombFuse >= -5)
                     {
                         bombFuse--;
                         if (bombFuse == 0)
@@ -97,23 +93,29 @@ namespace BomberMan_2._0
                         {
                             if (isPlayerDead(pl.getPlayerPos()) == true)
                             {
-                                MessageBox.Show("Player " + playerDead + " has died.");
-                                MainWindow.gameState = MainWindow.GameState.gameOver;
+                                if (playerDead == 1)
+                                {
+                                    Menu.playerNumber = "2";
+                                }
+                                else
+                                    Menu.playerNumber = "1";
+
+                                MainWindow.gamestate = MainWindow.GameState.gameOver;
                             }
                             playerDead++;
 
                         }
-                            return bombPlaced = true;
+                            return player.bombPlaced = true;
                         }
                         else if (bombFuse == -5)
                         {
                             b.resetBomb();
-                            return bombPlaced = false;
+                            return player.bombPlaced = false;
                         }
-                        return bombPlaced = true;
+                        return player.bombPlaced = true;
                     }
                     else
-                        return bombPlaced = false;
+                        return player.bombPlaced = false;
             }
             return false;
         }
