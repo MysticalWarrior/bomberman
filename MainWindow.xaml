@@ -7,7 +7,5 @@
         mc:Ignorable="d"
         Title="Bomberman" Height="700" Width="1000" >
     <Canvas x:Name="canvas">
-        <Button x:Name="btnStart" Height="100" Width="250" Canvas.Left="360" Canvas.Top="100" Content="Start" FontSize="35" Click="BtnStart_Click"/>
-        <Button x:Name="btnOptions"  Height="100" Width="250" Canvas.Left="360" Canvas.Top="250" Content="Options" FontSize="35" Click="BtnOptions_Click"/>
     </Canvas>
 </Window>

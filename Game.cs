@@ -22,6 +22,8 @@ namespace BomberMan_2._0
 {
     class Game
     {
+        MainWindow mainWindow;
+        public static int playerDead = 0;
         Map map;
 
         Player player1;
@@ -37,7 +39,7 @@ namespace BomberMan_2._0
         List<Player> players;
         public Game(Canvas c)
         {
-            map = new Map(c); //construct map.
+            mainWindow = new MainWindow();
 
             player1Point = new Point(0, 0);
             player1 = new Player(c, Brushes.DarkRed, player1Point);  //construct player1 in top left corner
@@ -90,14 +92,15 @@ namespace BomberMan_2._0
                         if (bombFuse == 0)
                         {
                             b.explosion();
-                        int i = 1;
+                        playerDead = 1;
                         foreach (Player pl in players)
                         {
                             if (isPlayerDead(pl.getPlayerPos()) == true)
                             {
-                                MessageBox.Show("player " + i.ToString() + " ded");
+                                MessageBox.Show("Player " + playerDead + " has died.");
+                                MainWindow.gameState = MainWindow.GameState.gameOver;
                             }
-                            i++;
+                            playerDead++;
 
                         }
                             return bombPlaced = true;

@@ -23,12 +23,8 @@ namespace BomberMan_2._0
 {
     class Bomb
     {
-        Matrices matrices = new Matrices();
         public bool bombPlaced; //true if a bomb is currently placed but hasnt exploded, (else false).
         
-        //class-wide variables
-        DispatcherTimer bombTimer = new DispatcherTimer();
-        public int bombFuse;
         static Point bombPos;
 
         /// <summary>
@@ -39,7 +35,6 @@ namespace BomberMan_2._0
         public Bomb(Point p)
         {
                 bombPlaced = true;
-                bombFuse = 2;
                 armBomb(p);
         }
 
@@ -51,11 +46,8 @@ namespace BomberMan_2._0
         public Point armBomb(Point p)
         {
             bombPos = new Point((int)p.X/64, (int)p.Y/64);
-            bombFuse = 4;
-
             Matrices.bomb[(int)bombPos.X, (int)bombPos.Y] = 1;
             Map.colourMap();
-            bombTimer.Start();
 
             return bombPos;
         }
@@ -104,13 +96,10 @@ namespace BomberMan_2._0
         /// </summary>
         public bool resetBomb()
         {
-                bombFuse = 2;
                 Matrices.bomb[(int)bombPos.X, (int)bombPos.Y] = 0;
                 Matrices.updateBlocks();
                 Matrices.updateWalkable();
                 Map.colourMap();
-                bombTimer.Stop();
-                bombPlaced = false;
                 return true;
         }
 
