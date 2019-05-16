@@ -24,14 +24,21 @@ namespace BomberMan_2._0
         Point playerPoint;
         Rectangle playerRectangle;
         public bool bombPlaced;
-        public int bombFuse;
+        Key left, right, down, up, place;
+        Bomb bomb;
         /// <summary>
         /// Authors
         /// Sebastian Horton, Logan Ellis
         /// creates a player rectangle with a hieght, width, colour and position on the canvas.
         /// </summary>
-        public Player(Canvas c, Brush colour, Point p) 
+        public Player(Canvas c, Brush colour, Point p, Key u, Key d, Key l, Key r, Key pl) 
         {
+            up = u;
+            down = d;
+            left = l;
+            right = r;
+            place = pl;
+
             playerPoint.X = p.X;
             playerPoint.Y = p.Y;
             playerRectangle = new Rectangle();
@@ -39,6 +46,8 @@ namespace BomberMan_2._0
             playerRectangle.Height = 64;
             playerRectangle.Width = 64;
             playerRectangle.Fill = colour;
+
+
 
             Canvas.SetTop(playerRectangle, playerPoint.Y);
             Canvas.SetLeft(playerRectangle, playerPoint.X);
@@ -50,12 +59,24 @@ namespace BomberMan_2._0
         /// Sebastian Horton, Logan Ellis
         /// Updates the player after they take an action (place a bomb or move).
         /// </summary>
-        public Point updatePlayer(Key up, Key down, Key left, Key right) 
+        public Point updatePlayer(int i) 
         {
-            movePlayer(up, down, left, right);
-          
+            movePlayer();
+            placeBomb();
+            if(bombPlaced == true)
+            {
+                bomb.updateBomb(bombPlaced);
+                bombPlaced = bomb.resetBomb(bombPlaced);
+            }
+            if(isPlayerDead() == true)
+            {
+                MainWindow.playerNumber = i;
+                MainWindow.gamestate = MainWindow.GameState.gameOver;
+            }
             Canvas.SetTop(playerRectangle, playerPoint.Y);
             Canvas.SetLeft(playerRectangle, playerPoint.X);
+
+            Console.WriteLine(bombPlaced.ToString());
 
             return playerPoint;
         }
@@ -65,7 +86,7 @@ namespace BomberMan_2._0
         /// Sebastian Horton, Logan Ellis
         /// takes the players input based on their controls and makes sure that they're within the map.
         /// </summary>
-        private void movePlayer(Key up, Key down, Key left, Key right)
+        private void movePlayer()
         {
             if(Keyboard.IsKeyDown(up) && playerPoint.Y > 0) 
             {
@@ -139,6 +160,8 @@ namespace BomberMan_2._0
             }
             else
                 return false;
+
+           
             
         }
 
@@ -147,56 +170,25 @@ namespace BomberMan_2._0
         {
             return playerPoint;
         }
-        public bool placeBomb(Key place, List<Player> players, List<Bomb> bombs, int playerDead)
+
+        public void placeBomb()
         {
-            if (bombPlaced == false)
+
+            if (Keyboard.IsKeyDown(place) && bombPlaced == false)
             {
-                if (Keyboard.IsKeyDown(place))
-                {
-                    bombs.Add(new Bomb(getPlayerPos()));
-                    bombFuse = 10;
-                    return bombPlaced = true;
-                }
-            }
-            foreach (Bomb b in bombs)
+                bombPlaced = true;
+                bomb = new Bomb(getPlayerPos());
+            }  
+        }
+
+        public bool isPlayerDead()
+        {
+            if (Matrices.bomb[(int)playerPoint.X / 64, (int)playerPoint.Y / 64] == 2)
             {
-
-                if (bombPlaced == true && bombFuse >= -2)
-                {
-                    bombFuse--;
-                    if (bombFuse == 0)
-                    {
-                        b.explosion(getPlayerPos());
-                        playerDead = 1;
-                        foreach (Player pl in players)
-                        {
-                            if (Game.isPlayerDead(pl.getPlayerPos()) == true)
-                            {
-                                if (playerDead == 1)
-                                {
-                                    Menu.playerNumber = "2";
-                                }
-                                else
-                                    Menu.playerNumber = "1";
-
-                                MainWindow.gamestate = MainWindow.GameState.gameOver;
-                            }
-                            playerDead++;
-
-                        }
-                        return bombPlaced = true;
-                    }
-                    else if (bombFuse == -2)
-                    {
-                        b.resetBomb();
-                        return bombPlaced = false;
-                    }
-                    return bombPlaced = true;
-                }
-                else
-                    return bombPlaced = false;
+                return true;
             }
-            return false;
+            else
+                return false;
         }
     }
 }

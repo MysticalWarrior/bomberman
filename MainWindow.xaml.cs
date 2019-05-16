@@ -33,7 +33,7 @@ namespace BomberMan_2._0
         Menu menu;
         public enum GameState { startMenu, optionsMenu, gameOn, gameOver}
         public static GameState gamestate;
-        
+        public static int playerNumber;
         DispatcherTimer gameTimer;
        
         public MainWindow()
@@ -57,7 +57,7 @@ namespace BomberMan_2._0
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             game.updateGame();
-            menu.EndGame(BtnPlay_Click, BtnControls_Click, BtnQuit_Click, gameTimer, cGame);
+            menu.EndGame(BtnPlay_Click, BtnControls_Click, BtnQuit_Click, gameTimer, cGame, playerNumber);
         }
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)

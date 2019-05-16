@@ -108,7 +108,7 @@ namespace BomberMan_2._0
             {
                 for (int y = 0; y < 15; y++)
                 {
-                    if (bomb[y, x] == 1 || blocks[y, x] == 0)
+                    if (bomb[y, x] == 2 || blocks[y, x] == 0)
                     {
                         blocks[y, x] = 0;
                     }

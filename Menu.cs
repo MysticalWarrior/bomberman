@@ -140,12 +140,12 @@ namespace BomberMan_2._0
 
             c.Children.Add(cControls);
         }
-        public void createGameOverMenu(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click)
+        public void createGameOverMenu(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click, int i)
         {
             removeAll();
-            createMainMenu(btnPlay_Click, btnControls_Click, btnQuit_Click, "Player " + playerNumber + " Wins!");
+            createMainMenu(btnPlay_Click, btnControls_Click, btnQuit_Click, "Player " + i + " Wins!");
             c.Children.Add(cGameOverMenu);
-            if (playerNumber == "1")
+            if (i == 1)
             {
                 c.Background = Brushes.Red;
             }
@@ -154,17 +154,17 @@ namespace BomberMan_2._0
 
             
         }
-        public static void quitGame(MainWindow window)
+        public void quitGame(MainWindow window)
         {
             window.Close();
         }
-        public void EndGame(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click, DispatcherTimer timer, Canvas cGame)
+        public void EndGame(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click, DispatcherTimer timer, Canvas cGame, int i)
         {
            if(MainWindow.gamestate == MainWindow.GameState.gameOver)
             {
                 timer.Stop();
                 removeAll();
-                createGameOverMenu(btnPlay_Click, btnControls_Click, btnQuit_Click);
+                createGameOverMenu(btnPlay_Click, btnControls_Click, btnQuit_Click, i);
                 c.Children.Remove(cGame);
             }
         }

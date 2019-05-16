@@ -24,7 +24,7 @@ namespace BomberMan_2._0
     {
         Matrices matrix;
         Map map;
-        public static int playerDead = 0;
+        public int playerDead = 0;
       
         Player player1;
         Point player1Point;
@@ -41,11 +41,14 @@ namespace BomberMan_2._0
             matrix = new Matrices();
             Matrices.removeBombs();
             map = new Map(c);
-            player1Point = new Point(0, 0);
-            player1 = new Player(c, Brushes.DarkRed, player1Point);  //construct player1 in top left corner
 
+            //construct player1 in top left corner
+            player1Point = new Point(0, 0);
+            player1 = new Player(c, Brushes.MediumPurple, player1Point, Key.W, Key.S, Key.A, Key.D, Key.LeftShift);  
+
+            //construct player2 in bottom right corner
             player2Point = new Point(896, 512);
-            player2 = new Player(c, Brushes.DarkBlue, player2Point); //construct player2 in bottom right corner
+            player2 = new Player(c, Brushes.DarkBlue, player2Point, Key.Up, Key.Down, Key.Left, Key.Right, Key.RightCtrl);
 
             players = new List<Player>() { player1, player2};
             bombs = new List<Bomb>();
@@ -53,18 +56,10 @@ namespace BomberMan_2._0
         }
         public void updateGame()
         {
-
-            player1.updatePlayer(Key.W, Key.S, Key.A, Key.D);
-            player2.updatePlayer(Key.Up, Key.Down, Key.Left, Key.Right);
-
-            player1.placeBomb(Key.LeftShift, players, bombs, playerDead);
-            player2.placeBomb(Key.RightCtrl, players, bombs, playerDead);
-           
-
-            
-          
-            
+            player1.updatePlayer(2); //determining the winner
+            player2.updatePlayer(1);      
         }
+       
         /// <summary>
         /// Authors
         /// Sebastian Horton, Logan Ellis
@@ -78,15 +73,6 @@ namespace BomberMan_2._0
         /// Sebastion Horton
         /// checks if the player is in the blast radius
         /// </summary>
-        public static bool isPlayerDead(Point p)
-        {
-            
-                if (Matrices.bomb[(int)p.X / 64, (int)p.Y / 64] == 1)
-                {
-                    return true;
-                }
-                else
-                    return false;
-        }
+       
     }
 }

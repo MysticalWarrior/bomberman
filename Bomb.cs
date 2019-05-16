@@ -23,9 +23,8 @@ namespace BomberMan_2._0
 {
     class Bomb
     {
-        public bool bombPlaced; //true if a bomb is currently placed but hasnt exploded, (else false).
-        
-        static Point bombPos;
+        int bombFuse; 
+        Point bombPos;
 
         /// <summary>
         /// Authors
@@ -34,26 +33,19 @@ namespace BomberMan_2._0
         /// </summary>
         public Bomb(Point p)
         {
-            bombPlaced = true;
+            bombFuse = 10;
             bombPos = new Point();
             bombPos.X = p.X / 64;
             bombPos.Y = p.Y / 64;
-            armBomb();
-        }
 
-        /// <summary>
-        /// Authors
-        /// Sebastian Horton
-        /// triggers the fuse count down and updates the matrix.
-        /// </summary>
-        public Point armBomb()
-        {
-            
-            //MessageBox.Show(bombPos.ToString());
             Matrices.bomb[(int)bombPos.X, (int)bombPos.Y] = 1;
             Map.colourMap();
+        }
 
-            return bombPos;
+        public void updateBomb(bool bombPlaced)
+        {
+            explosion();
+            resetBomb(bombPlaced);
         }
 
         /// <summary>
@@ -61,35 +53,39 @@ namespace BomberMan_2._0
         /// Sebastian Horton
         /// checks if the explosion is within the map and updates the matrix.
         /// </summary>
-        public int[,] explosion(Point p)
+        public int[,] explosion()
         {
-            int x = (int)bombPos.X;
-            int y = (int)bombPos.Y;
+            
+                int x = (int)bombPos.X;
+                int y = (int)bombPos.Y;
 
+                if (bombFuse == 0)
+                {
+                    Matrices.bomb[x, y] = 2;
 
-            if (x + 1 < 15)
-            {
-                Matrices.bomb[x + 1, y] = 1;
-            }
+                    if (x + 1 < 15)
+                    {
+                        Matrices.bomb[x + 1, y] = 2;
+                    }
 
-            if (x - 1 > -1)
-            {
-                Matrices.bomb[x - 1, y] = 1;
-            }
+                    if (x - 1 > -1)
+                    {
+                        Matrices.bomb[x - 1, y] = 2;
+                    }
 
-            if (y + 1 < 9)
-            {
-                Matrices.bomb[x, y + 1] = 1;
-            }
+                    if (y + 1 < 9)
+                    {
+                        Matrices.bomb[x, y + 1] = 2;
+                    }
 
-            if (y - 1 > -1)
-            {
-                Matrices.bomb[x, y - 1] = 1;
-            }
-
-
-            Map.colourBombs();
-
+                    if (y - 1 > -1)
+                    {
+                        Matrices.bomb[x, y - 1] = 2;
+                    }
+                    
+                }
+                Map.colourBombs();
+                bombFuse--;
             return Matrices.bomb;
         }
 
@@ -98,14 +94,19 @@ namespace BomberMan_2._0
         /// Sebastian Horton
         /// resets the fuse, updates the matrix and redraws the map.
         /// </summary>
-        public bool resetBomb()
+        public bool resetBomb(bool bombPlaced)
         {
-            
+            if (bombFuse <= -2)
+            {
                 Matrices.updateBlocks();
                 Matrices.updateWalkable();
+                Matrices.removeBombs();
                 Map.colourMap();
-            Matrices.removeBombs();
-            return true;
+
+                return bombPlaced = false;
+            }
+            else
+                return bombPlaced = true;
         }
 
     }

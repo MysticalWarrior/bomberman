@@ -55,7 +55,6 @@ namespace BomberMan_2._0
         /// </summary>
         public static void colourMap()
         {
-            /*Ethan change these to be the sprites you created*/
             for (int x = 0; x < 9; x++)
             {
                 for (int y = 0; y < 15; y++)
@@ -75,9 +74,9 @@ namespace BomberMan_2._0
                     }
                     else if (Matrices.walkable[y, x] == 1)
                     {
-                        if(Matrices.bomb[y,x] == 1)
+                        if(Matrices.bomb[y,x] == 2)
                         {
-                            Matrices.map[y, x].Fill = Brushes.Green;
+                           // Matrices.map[y, x].Fill = Brushes.DarkRed;
                         }
                         else
                         Matrices.map[y, x].Fill = Brushes.Blue;
@@ -98,13 +97,23 @@ namespace BomberMan_2._0
             {
                 for (int y = 0; y < 15; y++)
                 {
-                    if (Matrices.bomb[y, x] == 1 && Matrices.pillars[y,x] == 0)
+                    if (Matrices.pillars[y, x] == 0)
                     {
-                        Matrices.map[y, x].Fill = Brushes.Green;
+                       
+                        if (Matrices.bomb[y, x] == 1)
+                        {
+                            Matrices.map[y, x].Fill = Brushes.Pink;
+                        }
+                        else if (Matrices.bomb[y, x] == 2)
+                        {
+                            Matrices.map[y, x].Fill = Brushes.DarkRed; 
+                        }
+                        
                     }
                 }
             }
-        }
+        }//end colourBombs
 
-    }
-}
+    }//end clas
+
+}//end namespace
