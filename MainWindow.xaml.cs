@@ -18,7 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace BomberMan_2._0
+namespace Bomberman
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -46,11 +46,6 @@ namespace BomberMan_2._0
             gameTimer = new DispatcherTimer();
             gameTimer.Tick += gameTimer_Tick;
             gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 15); //30 frames(ticks)/second
-
-            //https://www.youtube.com/watch?v=nFp_2eJlfYg
-            music.Open(new Uri("Song.wav", UriKind.Relative));
-            music.Volume = 0.05;
-            music.Play();
         }
 
         /// <summary>

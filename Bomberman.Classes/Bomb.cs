@@ -19,7 +19,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 
 
-namespace BomberMan_2._0
+namespace Bomberman
 {
     class Bomb
     {
@@ -73,11 +73,7 @@ namespace BomberMan_2._0
             if (bombFuse == 0)
             {
                 Matrices.bomb[x, y] = 2;
-                MediaPlayer boom = new MediaPlayer();
-                //https://www.youtube.com/watch?v=EXzoh6uJO1w
-                boom.Open(new Uri("Explosion Sound.wav", UriKind.Relative));
-                boom.Play();
-                boom.Volume = 0.5;
+
                 if (x + 1 < 15)
                 {
                     Matrices.bomb[x + 1, y] = 2;
