@@ -25,7 +25,6 @@ namespace Bomberman
     /// </summary>
     public partial class MainWindow : Window
     {
-        /*Ethan add appropriate music*/
 
         //public objects:
         Game game;
@@ -35,17 +34,22 @@ namespace Bomberman
         public static GameState gamestate;
         public static int playerNumber;
         DispatcherTimer gameTimer;
-        MediaPlayer music =  new MediaPlayer();
+        MediaPlayer music = new MediaPlayer();
 
         public MainWindow()
         {
             InitializeComponent();
-            menu = new Menu(canvas, BtnPlay_Click, BtnControls_Click, BtnQuit_Click);
+            menu = new Menu(canvas, BtnPlay_Click, BtnHowToPlay_Click ,BtnControls_Click, BtnQuit_Click, BtnBack_Click);
             cGame = new Canvas();
 
             gameTimer = new DispatcherTimer();
             gameTimer.Tick += gameTimer_Tick;
             gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 15); //30 frames(ticks)/second
+
+            //https://www.youtube.com/watch?v=nFp_2eJlfYg
+            //music.Open(new Uri("Song.wav", UriKind.Relative));
+            //music.Volume = 0.05;
+            //music.Play();
         }
 
         /// <summary>
@@ -57,7 +61,7 @@ namespace Bomberman
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             game.updateGame();
-            menu.EndGame(BtnPlay_Click, BtnControls_Click, BtnQuit_Click, gameTimer, cGame, playerNumber);
+            menu.EndGame(gameTimer, cGame, playerNumber);
         }
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
@@ -69,7 +73,7 @@ namespace Bomberman
         }
         private void BtnControls_Click(object sender, RoutedEventArgs e)
         {
-            menu.createControlsMenu(BtnBack_Click);
+            menu.createControlsMenu();
         }
         private void BtnQuit_Click(object sender, RoutedEventArgs e)
         {
@@ -77,7 +81,11 @@ namespace Bomberman
         }
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            menu.createMainMenu(BtnPlay_Click, BtnControls_Click, BtnQuit_Click, "Bomberman");
+            menu.createMainMenu("Bomberman");
+        }
+        private void BtnHowToPlay_Click(object sender, RoutedEventArgs e)
+        {
+            menu.createHowToPlay();
         }
     }
 }
