@@ -18,7 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace BomberMan_2._0
+namespace Bomberman
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -31,11 +31,11 @@ namespace BomberMan_2._0
         Game game;
         Canvas cGame;
         Menu menu;
-        public enum GameState { startMenu, optionsMenu, gameOn, gameOver}
+        public enum GameState { startMenu, optionsMenu, gameOn, gameOver }
         public static GameState gamestate;
         public static int playerNumber;
         DispatcherTimer gameTimer;
-       
+
         public MainWindow()
         {
             InitializeComponent();
