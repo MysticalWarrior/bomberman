@@ -1,4 +1,4 @@
-﻿/*/* Sebastian Horton, Ethan Shipston
+/*/* Sebastian Horton, Ethan Shipston
  * Friday May 17th, 2019
  *  The menu interface for bomberman
  **/
@@ -26,21 +26,33 @@ namespace Bomberman
         //each menu gets a canvas
         Canvas c;
         Canvas cControls;
+        Canvas cHowToPlay;
         Canvas cMainMenu;
         Canvas cGameOverMenu;
-       
+        RoutedEventHandler btnPlay_Click;
+        RoutedEventHandler btnHowToPlay_Click;
+        RoutedEventHandler btnControls_Click;
+        RoutedEventHandler btnQuit_Click;
+        RoutedEventHandler btnBack_Click;
+
         /// <summary>
         /// Authors
         /// Sebastian Horton
         /// creates the initial start menu
         /// </summary>
-        public Menu(Canvas canvas, RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click)
+        public Menu(Canvas canvas, RoutedEventHandler BtnPlay_Click, RoutedEventHandler BtnHowToPlay_Click, RoutedEventHandler BtnControls_Click, RoutedEventHandler BtnQuit_Click, RoutedEventHandler BtnBack_Click)
         {
             c = canvas;
             cControls = new Canvas();
+            cHowToPlay = new Canvas();
             cMainMenu = new Canvas();
             cGameOverMenu = new Canvas();
-            createMainMenu(btnPlay_Click, btnControls_Click, btnQuit_Click, "Bomberman");
+            btnPlay_Click = BtnPlay_Click;
+            btnHowToPlay_Click = BtnHowToPlay_Click;
+            btnControls_Click = BtnControls_Click;
+            btnQuit_Click = BtnQuit_Click;
+            btnBack_Click = BtnBack_Click;
+            createMainMenu("Bomberman");
 
         }
         /// <summary>
@@ -84,26 +96,49 @@ namespace Bomberman
         /// Ethan Shipston, Sebastian Horton
         /// Creates the main menu
         /// </summary>
-        public void createMainMenu(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click, string title)
+        public void createMainMenu(string title)
         {
             removeAll();
+
             TextBlock txtTitle = new TextBlock();
-            addTextBlock(txtTitle, 350, 50, 220, Brushes.DarkGray, title, cMainMenu);
+            txtTitle.TextAlignment = TextAlignment.Center;
+            addTextBlock(txtTitle, 300, 50, 300, Brushes.DarkGray, title, cMainMenu);
             Button btnPlay = new Button();
-            addButton(btnPlay, 350, 150, 200, 125, 35, Brushes.DarkGray, "Play", btnPlay_Click, cMainMenu);
+            addButton(btnPlay, 300, 150, 300, 145, 50, Brushes.DarkGray, "Play", btnPlay_Click, cMainMenu);
             Button btnControls = new Button();
-            addButton(btnControls, 350, 300, 200, 125, 35, Brushes.DarkGray, "Controls", btnControls_Click, cMainMenu);
+            addButton(btnControls, 350, 300, 200, 100, 35, Brushes.DarkGray, "Controls", btnControls_Click, cMainMenu);
+
+            Button btnHowToPlay = new Button();
+            addButton(btnHowToPlay, 350, 405, 200, 100, 35, Brushes.DarkGray, "How To Play", btnHowToPlay_Click, cMainMenu);
+
             Button btnQuit = new Button();
-            addButton(btnQuit, 350, 450, 200, 125, 35, Brushes.DarkGray, "Quit", btnQuit_Click, cMainMenu);
+            addButton(btnQuit, 350, 510, 200, 100, 35, Brushes.DarkGray, "Quit", btnQuit_Click, cMainMenu);
             c.Children.Add(cMainMenu);
         }
 
-       /// <summary>
-       /// Authors
-       /// Ethan Shipston, Sebastian Horton
-       /// creates the controls menu
-       /// </summary>
-        public void createControlsMenu(RoutedEventHandler btnBack_Click)
+        public void createHowToPlay()
+        {
+            removeAll();
+
+            TextBlock txtblk = new TextBlock();
+            addTextBlock(txtblk, 0, 0, 1000, Brushes.LightGray, "Welcome to Bomberman!" +
+                "\nYour goal is to beat the other player\n" +
+                "by blowing them up with your bomb!" +
+                "\nBe careful not to get caught in your own bomb,\n" +
+                "doing that will kill you too.",
+                cHowToPlay);
+
+            Button btnBack = new Button();
+            addButton(btnBack, 350, 600, 150, 50, 35, Brushes.LightGray, "Back", btnBack_Click, cHowToPlay);
+
+            c.Children.Add(cHowToPlay);
+        }
+        /// <summary>
+        /// Authors
+        /// Ethan Shipston, Sebastian Horton
+        /// creates the controls menu
+        /// </summary>
+        public void createControlsMenu()
         {
             removeAll();
 
@@ -176,10 +211,10 @@ namespace Bomberman
         /// Ethan Shipston, Sebastian Horton
         ///creates a version of the start menu with differing headers and backgrounds
         /// </summary>
-        public void createGameOverMenu(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click, int i)
+        public void createGameOverMenu(int i)
         {
             removeAll();
-            createMainMenu(btnPlay_Click, btnControls_Click, btnQuit_Click, "Player " + i + " Wins!");
+            createMainMenu("Player " + i + " Wins!");
             c.Children.Add(cGameOverMenu);
             if (i == 1)
             {
@@ -196,13 +231,13 @@ namespace Bomberman
         /// Ethan Shipston, Sebastian Horton
         /// stops the game and creates the "game over" screen
         /// </summary>
-        public void EndGame(RoutedEventHandler btnPlay_Click, RoutedEventHandler btnControls_Click, RoutedEventHandler btnQuit_Click, DispatcherTimer timer, Canvas cGame, int i)
+        public void EndGame(DispatcherTimer timer, Canvas cGame, int i)
         {
             if (MainWindow.gamestate == MainWindow.GameState.gameOver)
             {
                 timer.Stop();
                 removeAll();
-                createGameOverMenu(btnPlay_Click, btnControls_Click, btnQuit_Click, i);
+                createGameOverMenu(i);
                 c.Children.Remove(cGame);
             }
         }
@@ -218,6 +253,7 @@ namespace Bomberman
             c.Children.Remove(cControls);
             c.Children.Remove(cMainMenu);
             c.Children.Remove(cGameOverMenu);
+            c.Children.Remove(cHowToPlay);
         }
     }
 }
