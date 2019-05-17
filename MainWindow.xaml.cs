@@ -1,4 +1,4 @@
-﻿/* Sebastian Horton, Ethan Shipston, Logan Ellis, Elliot McArthur
+/* Sebastian Horton, Ethan Shipston, Logan Ellis, Elliot McArthur
  * Friday May 17th, 2019
  * The video game Bomberman recreated in C#
  **/
@@ -18,7 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Bomberman
+namespace BomberMan_2._0
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -35,6 +35,7 @@ namespace Bomberman
         public static GameState gamestate;
         public static int playerNumber;
         DispatcherTimer gameTimer;
+        MediaPlayer music =  new MediaPlayer();
 
         public MainWindow()
         {
@@ -46,6 +47,10 @@ namespace Bomberman
             gameTimer.Tick += gameTimer_Tick;
             gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000 / 15); //30 frames(ticks)/second
 
+            //https://www.youtube.com/watch?v=nFp_2eJlfYg
+            music.Open(new Uri("Song.wav", UriKind.Relative));
+            music.Volume = 0.05;
+            music.Play();
         }
 
         /// <summary>
